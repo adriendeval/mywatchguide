@@ -1,1 +1,3 @@
-# mywatchguide
+# MyWatchGuide - Projet PHP
+
+Ce projet est actuellement en cours de développement...
