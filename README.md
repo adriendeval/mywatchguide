@@ -1,3 +1,9 @@
 # MyWatchGuide - Projet PHP
 
-Ce projet est actuellement en cours de développement...
+Cette mini application vous permettra de gérer une liste des films et des séries que vous avez regardé très simplement.
+Vous pourrez :
+- ajouter des films/séries à votre liste de favoris
+- noter vos films/séries en favoris
+- ajouter votre propre avis ou commentaire sur un film ou une série
+
+Ce projet est actuellement en cours de développement.
