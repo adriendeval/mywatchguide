@@ -7,3 +7,4 @@ Vous pourrez :
 - ajouter votre propre avis ou commentaire sur un film ou une série
 
 Ce projet est actuellement en cours de développement.
+Pour suivre son avancée, rendez-vous sur [cette page de projet](https://github.com/users/adriendeval/projects/3).
