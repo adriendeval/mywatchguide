@@ -1,8 +1,6 @@
 <?php
 session_start();
-include 'includes/functions.php';
-
-logout();
+session_unset();
+session_destroy();
 header('Location: login.php');
-exit;
 ?>

@@ -1,42 +1,60 @@
 <?php
 session_start();
-include 'includes/db.php';
-include 'includes/functions.php';
+
+require 'vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$log = new Logger('login');
+$log->pushHandler(new StreamHandler('logs/app.log', Logger::INFO));
+
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USER'];
+$pass = $_ENV['DB_PASS'];
+
+// Connexion à la base de données
+$dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (loginUser($username, $password)) {
-        header('Location: index.php');
-        exit;
+    if (isset($users[$username]) && $users[$username] === $password) {
+        $_SESSION['username'] = $username;
+        header('Location: dashboard.php');
+        $log->info("Connexion de l'utilisateur $username");
     } else {
-        $error = "Nom d'utilisateur ou mot de passe incorrect.";
+        echo "<p class='error'>Identifiants incorrects.</p>";
+        $log->error("Échec de la connexion de l'utilisateur $username");
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Connexion - Film Tracker</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+<html>
+
 <body>
-    <div class="container">
-        <div class="login-form">
-            <h2>Connexion</h2>
-            <?php if (isset($error)): ?>
-                <p style="color: red;"><?php echo $error; ?></p>
-            <?php endif; ?>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-                <input type="password" name="password" placeholder="Mot de passe" required>
-                <button type="submit">Se connecter</button>
-            </form>
-            <p>Pas encore de compte ? <a href="register.php">S'inscrire</a></p>
-        </div>
-    </div>
+
+    <h2>Connexion</h2>
+
+    <form action="login.php" method="post">
+        <label for="username">Nom d'utilisateur :</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Mot de passe :</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Se connecter">
+    </form>
+
 </body>
+
 </html>

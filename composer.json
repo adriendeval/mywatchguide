@@ -1,0 +1,15 @@
+{
+    "name": "adrien/mywatchguide",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Adrien\\Mywatchguide\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "monolog/monolog": "^3.8",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
