@@ -1,7 +1,0 @@
-[2025-03-19T22:31:02.183415+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password","email":"","3":""}} []
-[2025-03-19T22:48:47.653800+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password","email":"","3":""}} []
-[2025-03-19T22:49:12.130139+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password","email":"","3":""}} []
-[2025-03-19T22:50:40.907840+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password","email":"","3":""}} []
-[2025-03-19T22:50:51.149027+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password","email":"","3":""}} []
-[2025-03-19T22:51:08.045306+00:00] login.INFO: Connexion réussie {"username":{"id":2,"0":2,"username":"brewenfrotin","1":"brewenfrotin","password":"password","2":"password","email":"","3":""}} []
-[2025-03-19T23:00:33.194901+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password","email":"","3":""}} []
