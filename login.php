@@ -11,30 +11,42 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $log = new Logger('login');
-$log->pushHandler(new StreamHandler('logs/app.log', Logger::INFO));
+$log->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::INFO));
 
 $host = $_ENV['DB_HOST'];
 $dbname = $_ENV['DB_NAME'];
-$user = $_ENV['DB_USER'];
-$pass = $_ENV['DB_PASS'];
-
-// Connexion à la base de données
-$dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+$dbUser = $_ENV['DB_USER'];
+$dbPass = $_ENV['DB_PASS'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (isset($users[$username]) && $users[$username] === $password) {
-        $_SESSION['username'] = $username;
-        header('Location: dashboard.php');
-        $log->info("Connexion de l'utilisateur $username");
-    } else {
-        echo "<p class='error'>Identifiants incorrects.</p>";
-        $log->error("Échec de la connexion de l'utilisateur $username");
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbUser, $dbPass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = :username');
+        $stmt->execute(['username' => $username]);
+        $user = $stmt->fetch();
+
+        if ($user && $password === $user['password']) { // change $pass en $password ici
+            $_SESSION['username'] = $user['username'];
+            $log->info('Connexion réussie', ['username' => $user]);
+            header('Location: dashboard.php');
+            exit();
+        } else {
+            echo "Identifiants incorrects.";
+            $log->warning('Identifiants incorrects', ['username' => $user]);
+        }                
+    } catch (PDOException $e) {
+        $log->error('PDOException: ' . $e->getMessage());
+        echo 'Une erreur est survenue. Veuillez réessayer.';
     }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 

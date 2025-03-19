@@ -15,11 +15,11 @@
 
     session_start();
 
-    if (isset($_SESSION['username'])) {
-        echo "<p><a href='dashboard.php'>Tableau de bord</a></p>";
-        echo "<p><a href='logout.php'>Se déconnecter</a></p>";
+    if (isset($users[$username]) && $users[$username] === $password) {
+        $_SESSION['username'] = $username;
+        header('Location: dashboard.php');
     } else {
-        echo "<p><a href='login.php'>Se connecter</a></p>";
+        echo "<a href='login.php'><i class='fi fi-rr-sign-in-alt'></i> Se connecter</a>";
     }
 
     ?>

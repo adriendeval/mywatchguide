@@ -1,3 +1,5 @@
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+
 * {
     font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -10,6 +12,10 @@ body {
 
 .notation {
     color: #888;
+}
+
+.fi {
+    vertical-align: -2px;
 }
 
 a[href="logout.php"] {
@@ -57,7 +63,7 @@ input[type="submit"]:hover {
     color: #4CAF50;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="email"] {
     padding: 6px;
     border-radius: 4px;
     border: 2px solid #888;
@@ -96,17 +102,17 @@ a[href="login.php"]:hover {
 
 a[href*=themoviedb] {
     color: white;
-    background-color: orangered;
+    background-color: orange;
     padding: 6px;
     text-decoration: none;
     border-radius: 4px;
-    border: 2px solid orangered;
+    border: 2px solid orange;
     cursor: pointer;
 }
 
 a[href*=themoviedb]:hover {
     background-color: transparent;
-    color: orangered;
+    color: orange;
 }
 
 a[href="index.php"] {
@@ -133,5 +139,6 @@ a[href="index.php"]:hover {
 }
 
 .error {
-    color: #f44336;
+    color: crimson;
+    font-weight: bold;
 }

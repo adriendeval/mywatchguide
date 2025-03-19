@@ -7,13 +7,13 @@
 
 <body>
     <h1>MyWatchGuide</h1>
-    <a href="dashboard.php">Tableau de bord</a>
+    <a href="dashboard.php"><i class="fi fi-rr-apps"></i> Tableau de bord</a>
     <?php
 
     session_start();
 
     if (isset($_SESSION['username'])) {
-        echo "<p><a href='logout.php'>Se déconnecter</a></p>";
+        echo "<p><a href='logout.php'><i class='fi fi-rr-sign-out-alt'></i> Se déconnecter</a></p>";
     } else {
         header('Location: login.php');
     }
@@ -70,7 +70,7 @@ try {
             echo "<p>Aucune description disponible en français.</p>";
         }
         echo "<p class='notation'>⭐ Note : {$film['vote_average']}/10</p>";
-        echo "<a href='https://www.themoviedb.org/movie/{$film['id']}' target='_blank'>Voir sur TMDB</a>";
+        echo "<a href='https://www.themoviedb.org/movie/{$film['id']}' target='_blank'><i class=\"fi fi-rr-info\"></i> Voir sur TMDB</a>";
         echo "</div>";
     }
 } catch (Exception $e) {
@@ -105,7 +105,7 @@ try {
             echo "<p>Aucune description disponible en français.</p>";
         }
         echo "<p>⭐ Note : {$tv['vote_average']}/10</p>";
-        echo "<a href='https://www.themoviedb.org/tv/{$film['id']}' target='_blank'>Voir sur TMDB</a>";
+        echo "<a href='https://www.themoviedb.org/tv/{$film['id']}' target='_blank'><i class=\"fi fi-rr-info\"></i> Voir sur TMDB</a>";
         echo "<hr>";
     }
 } catch (Exception $e) {
