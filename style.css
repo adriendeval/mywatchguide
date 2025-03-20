@@ -1,144 +1,366 @@
 @import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+/* Variables CSS pour une meilleure maintenabilité */
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #4CAF50;
+    --danger-color: #f44336;
+    --warning-color: orange;
+    --purple-color: purple;
+    --text-color: #000;
+    --background-color: #f0f0f0;
+    --card-background: white;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
 
 * {
     font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     margin: 12px;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 .notation {
-    color: #888;
+    color: grey;
+    font-size: 0.8em;
 }
 
 .fi {
     vertical-align: -2px;
 }
 
+/* Liens avec des styles modernes */
+a {
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
 a[href="logout.php"] {
     color: white;
-    background-color: #f44336;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid #f44336;
-    cursor: pointer;
+    background-color: var(--danger-color);
+    border: 2px solid var(--danger-color);
 }
 
 a[href="logout.php"]:hover {
     background-color: transparent;
-    color: #f44336;
+    color: var(--danger-color);
 }
 
-a[href="popular.php"] {
-    color: white;
-    background-color: #4CAF50;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid #4CAF50;
-    cursor: pointer;
-}
-
-a[href="popular.php"]:hover {
-    background-color: transparent;
-    color: #4CAF50;
-}
-
-input[type="submit"] {
-    color: white;
-    background-color: #4CAF50;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid #4CAF50;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: transparent;
-    color: #4CAF50;
-}
-
-input[type="text"], input[type="password"], input[type="email"] {
-    padding: 6px;
-    border-radius: 4px;
-    border: 2px solid #888;
-    outline: none;
-}
-
-a[href="dashboard.php"] {
-    color: white;
-    background-color: #2196F3;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid #2196F3;
-    cursor: pointer;
-}
-
-a[href="dashboard.php"]:hover {
-    background-color: transparent;
-    color: #2196F3;
-}
-
+a[href="popular.php"],
+a[href="dashboard.php"],
 a[href="login.php"] {
     color: white;
-    background-color: #2196F3;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid #2196F3;
-    cursor: pointer;
+    background-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
+a[href="popular.php"]:hover,
+a[href="dashboard.php"]:hover,
 a[href="login.php"]:hover {
     background-color: transparent;
-    color: #2196F3;
+    color: var(--primary-color);
 }
 
-a[href*=themoviedb] {
+.btnTMDB {
     color: white;
-    background-color: orange;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid orange;
-    cursor: pointer;
+    background-color: var(--warning-color);
+    border: 2px solid var(--warning-color);
+    text-align: center;
+
 }
 
-a[href*=themoviedb]:hover {
+.btnTMDB:hover {
     background-color: transparent;
-    color: orange;
+    color: var(--warning-color);
 }
 
 a[href="index.php"] {
     color: white;
-    background-color: purple;
-    padding: 6px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 2px solid purple;
-    cursor: pointer;
+    background-color: var(--purple-color);
+    border: 2px solid var(--purple-color);
 }
 
 a[href="index.php"]:hover {
     background-color: transparent;
-    color: purple;
+    color: var(--purple-color);
 }
 
+/* Boutons */
+input[type="submit"], button[type="submit"] {
+    color: white;
+    background-color: var(--secondary-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--secondary-color);
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+input[type="submit"]:hover, button[type="submit"]:hover {
+    background-color: transparent;
+    color: var(--secondary-color);
+}
+
+/* Champs de formulaire */
+input[type="text"], input[type="password"], input[type="email"] {
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--text-color);
+    outline: none;
+    transition: border-color var(--transition-speed);
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    border-color: var(--primary-color);
+}
+
+/* Conteneur pour les cartes en mode slider */
+.card-slider {
+    display: flex;
+    gap: 16px; /* Espacement entre les cartes */
+    overflow-x: auto; /* Permet le défilement horizontal */
+    scroll-behavior: smooth; /* Défilement fluide */
+    padding: 16px 0; /* Espacement vertical */
+}
+
+.card-slider::-webkit-scrollbar {
+    height: 8px; /* Hauteur de la scrollbar */
+}
+
+.card-slider::-webkit-scrollbar-thumb {
+    background-color: var(--text-color); /* Couleur de la barre */
+    border-radius: 4px; /* Arrondi */
+}
+
+.card-slider::-webkit-scrollbar-track {
+    background-color: var(--background-color); /* Couleur de fond */
+}
+
+/* Cartes */
 .card {
-    background-color: white;
-    padding: 12px;
-    border-radius: 4px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-    margin: 12px 0;
+    flex: 0 0 auto; /* Empêche les cartes de se réduire */
+    width: 256px; /* Largeur fixe pour les cartes */
+    background-color: var(--card-background);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow var(--transition-speed);
+    max-height: 750px; /* Limite la hauteur des cartes */
+    overflow: hidden; /* Cache le contenu qui dépasse */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+.card img {
+    margin-bottom: 8px;
+}
+
+.card .overview {
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.card .overview a {
+    color: var(--text-color); /* Couleur du texte */
+    text-decoration: underline; /* Soulignement simple */
+    font-weight: normal; /* Pas de gras */
+    transition: color var(--transition-speed); /* Transition pour un effet au survol */
+}
+
+.card .overview a:hover {
+    color: var(--primary-color); /* Change la couleur au survol */
+    text-decoration: underline; /* Conserve le soulignement */
+}
+
+/* Messages d'erreur */
 .error {
     color: crimson;
     font-weight: bold;
+}
+
+img {
+    border-radius: var(--border-radius);
+    border: 4px solid var(--text-color);
+    transition-duration: var(--transition-speed);
+}
+
+img:hover {
+    transition-duration: var(--transition-speed);
+    opacity: 0.7;
+}
+
+.overview {
+    color: var(--text-color);
+    font-size: 0.9em;
+    text-align: justify;
+}
+
+.card h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.readMoreLink {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+.btnFavorite {
+    color: white;
+    background-color: var(--secondary-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--secondary-color);
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    text-align: center;
+}
+
+.btnFavorite:hover {
+    background-color: transparent;
+    color: var(--secondary-color);
+}
+
+/* Navbar */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.navbar a:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.navbar .logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5em;
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    padding: 16px 0;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 768px) {
+    .card-slider {
+        gap: 8px;
+    }
+
+    .card {
+        width: 200px;
+    }
+
+    .card h2 {
+        font-size: 1em;
+    }
+
+    .card .overview {
+        font-size: 0.8em;
+    }
+
+    .card img {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card {
+        width: 150px;
+    }
+
+    .card h2 {
+        font-size: 0.8em;
+    }
+
+    .card .overview {
+        font-size: 0.7em;
+    }
+}
+
+select {
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--text-color);
+    outline: none;
+    transition: border-color var(--transition-speed);
+}
+
+select:focus {
+    border-color: var(--primary-color);
+}
+
+/* Tableaux */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid var(--text-color);
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: var(--background-color);
+}
+
+/* Formulaire de recherche */
+
+.search-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+}
+
+.search-form input[type="submit"] {
+    flex: 0 0 auto;
 }

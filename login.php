@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Chargement de l'autoloader de Composer
 require 'vendor/autoload.php';
 
 use Monolog\Logger;
