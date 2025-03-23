@@ -65,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <?php include "navbar.php"; ?>
+
     <div class="container">
         <h1>Inscription</h1>
         <?php if (!empty($error)): ?>

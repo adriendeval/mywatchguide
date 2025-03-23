@@ -31,32 +31,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch();
 
-        if ($user && $password === $user['password']) { // change $pass en $password ici
+        if ($user && $password === $user['password']) {
             $_SESSION['username'] = $user['username'];
             $log->info('Connexion réussie', ['username' => $user]);
             header('Location: dashboard.php');
             exit();
         } else {
             echo "Identifiants incorrects.";
-            $log->warning('Identifiants incorrects', ['username' => $user]);
-        }                
+            $log->warning('Identifiants incorrects', ['username' => $username]);
+        }
     } catch (PDOException $e) {
         $log->error('PDOException: ' . $e->getMessage());
         echo 'Une erreur est survenue. Veuillez réessayer.';
     }
 }
-
 ?>
 
-
 <!DOCTYPE html>
-
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - MyWatchGuide</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<html>
-
 <body>
+    <?php include "navbar.php"; ?>
 
     <h2>Connexion</h2>
 
@@ -67,7 +67,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Se connecter">
     </form>
-
 </body>
-
 </html>

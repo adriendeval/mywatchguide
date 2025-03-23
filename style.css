@@ -22,12 +22,14 @@
     padding: 0;
 }
 
+/* Ajout d'un espace pour le contenu sous la navbar */
 body {
     margin: 12px;
     padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    padding-top: 60px; /* Ajuste cette valeur en fonction de la hauteur de la navbar */
 }
 
 .notation {
@@ -39,92 +41,71 @@ body {
     vertical-align: -2px;
 }
 
-/* Liens avec des styles modernes */
-a {
+/* Simplification des boutons */
+a, input[type="submit"], button {
     display: inline-block;
-    padding: 8px 12px;
+    padding: 10px 20px;
     text-decoration: none;
-    border-radius: var(--border-radius);
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: transparent; /* Pas de fond */
+    color: var(--primary-color);
     font-weight: bold;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
 }
 
-a[href="logout.php"] {
-    color: white;
-    background-color: var(--danger-color);
-    border: 2px solid var(--danger-color);
+a:hover, input[type="submit"]:hover, button:hover {
+    background-color: var(--primary-color); /* Fond coloré au survol */
+    color: white; /* Texte blanc */
+    border-color: var(--primary-color); /* Bordure assortie */
 }
 
-a[href="logout.php"]:hover {
-    background-color: transparent;
-    color: var(--danger-color);
-}
-
+/* Boutons spécifiques */
+a[href="logout.php"],
 a[href="popular.php"],
 a[href="dashboard.php"],
-a[href="login.php"] {
-    color: white;
-    background-color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-a[href="popular.php"]:hover,
-a[href="dashboard.php"]:hover,
-a[href="login.php"]:hover {
-    background-color: transparent;
-    color: var(--primary-color);
-}
-
-.btnTMDB {
-    color: white;
-    background-color: var(--warning-color);
-    border: 2px solid var(--warning-color);
-    text-align: center;
-
-}
-
-.btnTMDB:hover {
-    background-color: transparent;
-    color: var(--warning-color);
-}
-
-a[href="index.php"] {
-    color: white;
-    background-color: var(--purple-color);
-    border: 2px solid var(--purple-color);
-}
-
-a[href="index.php"]:hover {
-    background-color: transparent;
-    color: var(--purple-color);
-}
-
-/* Boutons */
-input[type="submit"], button[type="submit"] {
-    color: white;
-    background-color: var(--secondary-color);
-    padding: 8px 12px;
-    border-radius: var(--border-radius);
+a[href="login.php"],
+a[href="index.php"],
+.btnTMDB,
+.btnFavorite {
+    all: unset; /* Réinitialise tous les styles */
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
     border: 2px solid var(--secondary-color);
-    cursor: pointer;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-input[type="submit"]:hover, button[type="submit"]:hover {
+    border-radius: 4px;
     background-color: transparent;
     color: var(--secondary-color);
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
 }
 
-/* Champs de formulaire */
-input[type="text"], input[type="password"], input[type="email"] {
+a[href="logout.php"]:hover,
+a[href="popular.php"]:hover,
+a[href="dashboard.php"]:hover,
+a[href="login.php"]:hover,
+a[href="index.php"]:hover,
+.btnTMDB:hover,
+.btnFavorite:hover {
+    background-color: var(--secondary-color); /* Fond coloré au survol */
+    color: white; /* Texte blanc */
+    border-color: var(--secondary-color); /* Bordure assortie */
+}
+
+/* Champs de formulaire simplifiés */
+input[type="text"], input[type="password"], input[type="email"], select {
     padding: 8px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--text-color);
+    border: 1px solid #ccc;
+    border-radius: 4px;
     outline: none;
     transition: border-color var(--transition-speed);
 }
 
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, select:focus {
     border-color: var(--primary-color);
 }
 
@@ -223,49 +204,50 @@ img:hover {
     transition: color var(--transition-speed);
 }
 
-.btnFavorite {
-    color: white;
-    background-color: var(--secondary-color);
-    padding: 8px 12px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--secondary-color);
-    cursor: pointer;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-    text-align: center;
-}
-
-.btnFavorite:hover {
-    background-color: transparent;
-    color: var(--secondary-color);
-}
-
 /* Navbar */
-
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2c3e50; /* Gris foncé */
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 0;
-    background-color: var(--primary-color);
-    color: white;
 }
 
-.navbar a {
+.navbar-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 15px;
+}
+
+/* Liens simples pour la navbar */
+.nav-link {
     color: white;
     text-decoration: none;
+    font-size: 16px;
     padding: 8px 12px;
-    border-radius: var(--border-radius);
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    transition: color var(--transition-speed);
 }
 
-.navbar a:hover {
-    background-color: white;
-    color: var(--primary-color);
-}
-
-.navbar .logo {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.5em;
+.nav-link:hover {
+    color: var(--secondary-color); /* Change la couleur au survol */
 }
 
 /* Footer */
@@ -313,18 +295,6 @@ footer {
     .card .overview {
         font-size: 0.7em;
     }
-}
-
-select {
-    padding: 8px;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--text-color);
-    outline: none;
-    transition: border-color var(--transition-speed);
-}
-
-select:focus {
-    border-color: var(--primary-color);
 }
 
 /* Tableaux */

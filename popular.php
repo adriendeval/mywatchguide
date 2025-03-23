@@ -2,24 +2,22 @@
 <html lang="fr">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films et Séries Populaires - MyWatchGuide</title>
+    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>MyWatchGuide</h1>
-    <a href="dashboard.php"><i class="fi fi-rr-apps"></i> Tableau de bord</a>
-    <?php
+    <?php include "navbar.php"; ?>
 
+    <h1>MyWatchGuide</h1>
+    <?php
     session_start();
 
     // Chargement de l'autoloader de Composer
     require 'vendor/autoload.php';
-
-    if (isset($_SESSION['username'])) {
-        echo "<p><a href='logout.php'><i class='fi fi-rr-sign-out-alt'></i> Se déconnecter</a></p>";
-    } else {
-        header('Location: login.php');
-    }
 
     ?>
     <h1>Films populaires</h1>

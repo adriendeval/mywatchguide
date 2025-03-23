@@ -1,10 +1,5 @@
 <?php
 
-// Ce fichier sera utilisé pour afficher la barre de navigation en haut de chaque page.
-// Il vérifie si l'utilisateur est connecté et affiche les liens correspondants.
-// Il est inclus dans chaque page qui nécessite une barre de navigation.
-// Le design sera beau et simple, avec un lien pour se déconnecter si l'utilisateur est connecté.
-
 session_start();
 
 // Chargement de l'autoloader de Composer
@@ -20,10 +15,31 @@ $dotenv->load();
 $log = new Logger('navbar');
 $log->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::INFO));
 
-if (isset($_SESSION['username'])) {
-    echo "<p><a href='logout.php'><i class='fi fi-rr-sign-out-alt'></i> Se déconnecter</a></p>";
-} else {
-    header('Location: login.php');
-}
-
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/navbar.css"> <!-- Lien vers le fichier CSS -->
+    <title>Navbar</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <a href="index.php" class="nav-link">MyWatchGuide</a>
+            </div>
+            <div class="navbar-right">
+                <?php if (isset($_SESSION['username'])): ?>
+                    <a href="dashboard.php" class="nav-link">Tableau de bord</a>
+                    <a href="logout.php" class="nav-link">Se déconnecter</a>
+                <?php else: ?>
+                    <a href="login.php" class="nav-link">Se connecter</a>
+                    <a href="register.php" class="nav-link">S'inscrire</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>
