@@ -42,33 +42,40 @@ echo "<i class='fi fi-rr-user'></i> Bienvenue <b>" . $_SESSION['username'] . "</
         <p><a href="popular.php" class="btn btn-primary"><i class="fi fi-rr-flame"></i> Populaire</a></p>
         <p><a href="search.php" class="btn btn-secondary"><i class="fi fi-rr-search"></i> Recherche</a></p>
 
-        <h2 class="mt-4">Favoris</h2>
+        <h2 class="mt-4">Mes favoris</h2>
 
         <?php
-        // Afficher les films et séries favoris de l'utilisateur
-        $servername = $_ENV['DB_HOST'];
-        $username = $_ENV['DB_USER'];
-        $password = $_ENV['DB_PASS'];
-        $dbname = $_ENV['DB_NAME'];
 
-        // Créer une connexion à la base de données
-        $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        try {
+            // Connexion à la base de données
+            $servername = $_ENV['DB_HOST'];
+            $username = $_ENV['DB_USER'];
+            $password = $_ENV['DB_PASS'];
+            $dbname = $_ENV['DB_NAME'];
 
-        // Préparer une requête SQL pour récupérer les favoris de l'utilisateur
-        $stmt = $dbh->prepare("SELECT * FROM favorites WHERE user_id = :user_id");
+            $dbh = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Exécuter la requête SQL en passant le paramètre user_id
-        $stmt->execute(['user_id' => $_SESSION['user_id']]);
+            // Préparation et exécution de la requête
+            $stmt = $dbh->prepare("SELECT * FROM favorites WHERE user_id = :user_id");
+            $stmt->execute(['user_id' => $_SESSION['user_id']]);
 
-        // Récupérer les résultats de la requête SQL
-        $favorites = $stmt->fetchAll();
+            $favorites = $stmt->fetchAll();
 
-        // Afficher les favoris de l'utilisateur
-        foreach ($favorites as $favorite) {
-            echo "<div class='card mb-3'>";
-            echo "<h2>{$favorite['title']}</h2>";
-            echo "<p>{$favorite['overview']}</p>";
-            echo "</div>";
+            // Affichage des favoris
+            if (count($favorites) > 0) {
+                foreach ($favorites as $favorite) {
+                    echo "<div class='card mb-3'>";
+                    echo "<h2>" . htmlspecialchars($favorite['title']) . "</h2>";
+                    echo "<p>" . htmlspecialchars($favorite['overview']) . "</p>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<p>Aucun favori trouvé.</p>";
+            }
+        } catch (PDOException $e) {
+            // Gestion des erreurs
+            echo "<p>Erreur lors de la récupération des favoris : " . htmlspecialchars($e->getMessage()) . "</p>";
         }
         ?>
     </div>

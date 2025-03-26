@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             echo "Identifiants incorrects.";
-            $log->warning('Identifiants incorrects', ['username' => $username]);
+            $log->warning('Identifiants incorrects');
         }
     } catch (PDOException $e) {
         $log->error('PDOException: ' . $e->getMessage());

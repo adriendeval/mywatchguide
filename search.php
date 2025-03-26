@@ -67,7 +67,7 @@
                 echo "<div class='card'>";
                 echo "<h2>{$result['title']}</h2>";
                 if (!empty($result['poster_path'])) {
-                    echo "<img src='https://image.tmdb.org/t/p/w500{$result['poster_path']}' alt='{$result['title']}' width='100%' height='auto' title='{$result['title']} (" . substr($result['release_date'], 0, 4) . ")'>";
+                    echo "<img src='https://image.tmdb.org/t/p/w500{$result['poster_path']}' alt='{$result['title']}' width='100%' height='auto' title='{$result['title']}'>";
                 } else {
                     echo "<p>Aucune image disponible.</p>";
                 }

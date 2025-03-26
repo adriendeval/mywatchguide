@@ -96,9 +96,9 @@
                     'movie_id' => $movieId
                 ]);
 
-                $log->log(Logger::INFO, 'Film ajouté aux favoris', ['user_id' => $_SESSION['user_id'], 'movie_id' => $movieId]);
+                $log->log(Logger::INFO, 'Film ajouté aux favoris');
             } catch (PDOException $e) {
-                $log->log(Logger::ERROR, 'Erreur lors de l\'ajout du film aux favoris', ['error' => $e->getMessage()]);
+                $log->log(Logger::ERROR, 'Erreur lors de l\'ajout du film aux favoris');
             }
         }
 
