@@ -9,5 +9,7 @@ Vous pourrez :
 Ce projet est actuellement en cours de développement.
 Pour suivre son avancée, rendez-vous sur [cette page de projet](https://github.com/users/adriendeval/projects/3).
 
+---
+
 Todo :
 - [ ] Intégrer le CDN Tailwind pour le CSS
