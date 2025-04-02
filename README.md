@@ -12,4 +12,5 @@ Pour suivre son avancée, rendez-vous sur [cette page de projet](https://github.
 ---
 
 Todo :
-- [ ] Intégrer le CDN Tailwind pour le CSS
+- [x] Intégrer le CDN Tailwind pour le CSS (en cours)
+- [ ] Utiliser Twig pour séparer le PHP de l'HTML (en cours)
