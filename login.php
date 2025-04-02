@@ -11,18 +11,23 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+// Création d'un logger pour la partie "login"
 $log = new Logger('login');
 $log->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::INFO));
 
+// Variables d'environnement
 $host = $_ENV['DB_HOST'];
 $dbname = $_ENV['DB_NAME'];
 $dbUser = $_ENV['DB_USER'];
 $dbPass = $_ENV['DB_PASS'];
 
+
+// Si on reçoit des données en POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    // On tente de se connecter à la base de données
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbUser, $dbPass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -33,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($user && $password === $user['password']) {
             $_SESSION['username'] = $user['username'];
-            $log->info('Connexion réussie', ['username' => $user]);
+            $log->info('Connexion réussie');
             header('Location: dashboard.php');
             exit();
         } else {
             echo "Identifiants incorrects.";
-            $log->warning('Identifiants incorrects');
+            $log->warning('Identifiants incorrects !');
         }
     } catch (PDOException $e) {
         $log->error('PDOException: ' . $e->getMessage());

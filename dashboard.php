@@ -75,7 +75,7 @@ echo "<i class='fi fi-rr-user'></i> Bienvenue <b>" . $_SESSION['username'] . "</
             }
         } catch (PDOException $e) {
             // Gestion des erreurs
-            echo "<p>Erreur lors de la récupération des favoris : " . htmlspecialchars($e->getMessage()) . "</p>";
+            echo "<p>Erreur : " . htmlspecialchars($e->getMessage()) . "</p>";
         }
         ?>
     </div>
