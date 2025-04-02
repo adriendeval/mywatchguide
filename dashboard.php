@@ -55,6 +55,7 @@ echo $twig->render('dashboard.html.twig', [
         'error' => $error,
         'favorites' => $favorites,  
         'username' => $_SESSION['username'],
+        'title' => 'Tableau de bord - MyWatchGuide',
     ]
 );
 
