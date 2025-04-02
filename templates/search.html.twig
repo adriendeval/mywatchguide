@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Recherche</h1>
+    <form action="search.php" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-6">
+        <div class="mb-4">
+            <label for="search_type" class="block text-gray-700 text-sm font-bold mb-2">Type de recherche :</label>
+            <select name="search_type" id="search_type"
+                class="block w-full border border-gray-300 rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="movie">Films</option>
+                <option value="tv">Séries</option>
+            </select>
+        </div>
+        <div class="mb-4"></div>
+        <label for="search_term" class="block text-gray-700 text-sm font-bold mb-2">Terme de recherche :</label>
+        <input type="text" name="search_term" id="search_term" required
+            class="block w-full border border-gray-300 rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+</div>
+<div class="flex items-center justify-between"></div>
+<button type="submit"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    Rechercher
+</button>
+</div>
+</form>
+
+<h2 class="text-2xl font-semibold mt-8">Résultats de la recherche</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+    {% for result in results %}
+    <div class="bg-white shadow-md rounded-lg p-4">
+        <h3 class="text-lg font-semibold mb-2">{{ result.original_title }}</h3>
+        <p class="text-gray-600">{{ result.overview }}</p>
+        <a href="#" class="text-blue-500 hover:underline">Voir les détails</a>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

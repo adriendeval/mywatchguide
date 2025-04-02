@@ -23,7 +23,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 
-
+// Twig
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader);
 
@@ -58,4 +58,3 @@ echo $twig->render('dashboard.html.twig', [
         'title' => 'Tableau de bord - MyWatchGuide',
     ]
 );
-

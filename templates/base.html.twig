@@ -9,37 +9,53 @@
     <title>{{ title }}</title>
 </head>
 
-<body>
-    <div class="container py-4 mb-10">
-        <br/>
-        <h1 class="text-xl text-blue-700 text-center mb-4">{{ title }}</h1>
-
-        <p><a href="popular.php" class="btn btn-primary"><i class="fi fi-rr-flame"></i> Populaire</a></p>
-        <p><a href="search.php" class="btn btn-secondary"><i class="fi fi-rr-search"></i> Recherche</a></p>
-
-        <br>
-        <i class='fi fi-rr-user'></i> Bienvenue <a href='profile.php'> {{ username }} </a> !
-        
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <a href="index.php" class="nav-link">MyWatchGuide</a>
-            </div>
-            <div class="navbar-right">
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-white shadow"></header>
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.php" class="text-2xl font-bold text-blue-600 hover:text-blue-700">MyWatchGuide</a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="popular.php" class="text-gray-700 hover:text-blue-500">Populaire</a>
+                <a href="search.php" class="text-gray-700 hover:text-blue-500">Recherche</a>
                 {% if username %}
-                    <a href="dashboard.php" class="nav-link">Tableau de bord</a>
-                    <a href="logout.php" class="nav-link">Se déconnecter</a>
+                    <a href="dashboard.php" class="text-gray-700 hover:text-blue-500">Tableau de bord</a>
+                    <a href="logout.php" class="text-gray-700 hover:text-blue-500">Se déconnecter</a>
                 {% else %}
-                    <a href="login.php" class="nav-link">Se connecter</a>
-                    <a href="register.php" class="nav-link">S'inscrire</a>
+                    <a href="login.php" class="text-gray-700 hover:text-blue-500">Se connecter</a>
+                    <a href="register.php" class="text-gray-700 hover:text-blue-500">S'inscrire</a>
                 {% endif %}
-            </div>
+            </nav>
+            <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
         </div>
-    </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-100">
+            <a href="popular.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Populaire</a>
+            <a href="search.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Recherche</a>
+            {% if username %}
+                <a href="dashboard.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Tableau de bord</a>
+                <a href="logout.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Se déconnecter</a>
+            {% else %}
+                <a href="login.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Se connecter</a>
+                <a href="register.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">S'inscrire</a>
+            {% endif %}
+        </div>
+    </header>
 
-    {% block body %}
+    <main class="container mx-auto mt-6">
+        {% block body %}
+        {% endblock %}
+    </main>
 
-    {% endblock %}
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
 
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 </body>
+
 </html>

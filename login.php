@@ -53,20 +53,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - MyWatchGuide</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
     <?php include "navbar.php"; ?>
 
-    <h2>Connexion</h2>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center mb-6">Connexion</h2>
 
-    <form action="login.php" method="post">
-        <label for="username">Nom d'utilisateur :</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Mot de passe :</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Se connecter">
-    </form>
+        <form action="login.php" method="post" class="space-y-4">
+            <div>
+                <label for="username" class="block text-gray-700 font-bold mb-2">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div>
+                <label for="password" class="block text-gray-700 font-bold mb-2">Mot de passe :</label>
+                <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="flex items-center justify-between">
+                <input type="submit" value="Se connecter" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            </div>
+        </form>
+    </div>
 </body>
 </html>

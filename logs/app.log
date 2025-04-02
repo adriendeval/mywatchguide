@@ -19,3 +19,8 @@
 [2025-03-27T10:03:23.187784+00:00] favorites.ERROR: Erreur lors de l'ajout du film aux favoris [] []
 [2025-04-02T12:11:47.742056+00:00] login.INFO: Connexion réussie {"username":{"id":1,"0":1,"username":"adriendeval","1":"adriendeval","password":"password","2":"password"}} []
 [2025-04-02T12:29:10.354518+00:00] login.INFO: Connexion réussie [] []
+[2025-04-02T13:37:53.750275+00:00] login.WARNING: Identifiants incorrects [] []
+[2025-04-02T13:37:58.601052+00:00] login.INFO: Connexion réussie [] []
+[2025-04-02T13:46:44.126601+00:00] login.INFO: Connexion réussie [] []
+[2025-04-02T13:49:49.227055+00:00] add_favorite.ERROR: PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`adriendeval_mywatchguide`.`favorites`, CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) [] []
+[2025-04-02T13:54:35.155642+00:00] login.INFO: Connexion réussie [] []
