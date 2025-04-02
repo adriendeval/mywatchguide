@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<main class="container mx-auto py-8">
+	<section>
+		<h2 class="text-3xl font-semibold mb-6 text-center">Films populaires</h2>
+		<div
+			class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {# Affichage des films populaires #}
+            {% for movie in movies %}
+                <div class="bg-white shadow-md rounded-lg flex flex-col p-4 h-full">
+                    <h3 class="text-lg font-semibold mb-2">{{ movie.title }}</h3>
+                    <p class="text-gray-600 flex-grow">{{ movie.overview }}</p>
+                    <a href="#" class="text-blue-500 hover:underline mt-4 self-start">Voir les détails</a>
+                </div>
+            {% endfor %}
+		</div>
+	</section>
+
+	<section class="mt-12">
+		<h2 class="text-3xl font-semibold mb-6 text-center">Séries populaires</h2>
+		<div
+			class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {# Affichage des séries populaires #}
+            {% for series in series %}
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-lg font-semibold mb-2">{{ series.original_name }}</h3>
+                    <p class="text-gray-600">{{ series.overview }}</p>
+                    <a href="#" class="text-blue-500 hover:underline">Voir les détails</a>
+                </div>
+            {% endfor %}
+		</div>
+	</section>
+</main>
+
+{% endblock %}

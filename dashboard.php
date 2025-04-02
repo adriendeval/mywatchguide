@@ -22,7 +22,6 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-
 // Twig
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader);
@@ -56,5 +55,6 @@ echo $twig->render('dashboard.html.twig', [
         'favorites' => $favorites,  
         'username' => $_SESSION['username'],
         'title' => 'Tableau de bord - MyWatchGuide',
+        'name' => 'Tableau de bord',
     ]
 );

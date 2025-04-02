@@ -62,33 +62,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - MyWatchGuide</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
     <?php include "navbar.php"; ?>
 
-    <div class="container">
-        <h1>Inscription</h1>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center mb-6">Inscription</h2>
+
         <?php if (!empty($error)): ?>
-            <p class="error"><?= htmlspecialchars($error) ?></p>
+            <p class="text-red-500 text-center mb-4"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
-        <form method="POST" action="register.php">
+
+        <form method="POST" action="register.php" class="space-y-4">
             <div>
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" required><br><br>
+                <label for="username" class="block text-gray-700 font-bold mb-2">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div>
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required><br><br>
+                <label for="password" class="block text-gray-700 font-bold mb-2">Mot de passe :</label>
+                <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div>
-                <label for="confirm_password">Confirmer le mot de passe</label>
-                <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+                <label for="confirm_password" class="block text-gray-700 font-bold mb-2">Confirmer le mot de passe :</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
-            <button type="submit">S'inscrire</button>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">S'inscrire</button>
+            </div>
         </form>
-        <p>Déjà inscrit ? <a href="login.php">Connectez-vous ici</a>.</p>
+        <p class="text-center mt-4">Déjà inscrit ? <a href="login.php" class="text-blue-500 hover:underline">Connectez-vous ici</a>.</p>
     </div>
 </body>
 </html>

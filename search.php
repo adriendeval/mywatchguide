@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require 'vendor/autoload.php';
 
 use Monolog\Logger;
@@ -87,8 +89,6 @@ echo $twig->render('search.html.twig', [
     'favorites' => $favorites,
     'username' => $_SESSION['username'],
     'title' => 'Recherche - MyWatchGuide',
-    'rating' => $rating,
-    'searchType' => $searchType,
-    'searchTerm' => $searchTerm,
+    'name' => 'Recherche',
     'results' => $data['results'] ?? [],
 ]);
