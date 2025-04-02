@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Tableau de bord</title>
+</head>
+
+<body>
+    <div class="container py-4">
+        <h1 class="text-center mb-4">Tableau de bord</h1>
+
+        <p><a href="popular.php" class="btn btn-primary"><i class="fi fi-rr-flame"></i> Populaire</a></p>
+        <p><a href="search.php" class="btn btn-secondary"><i class="fi fi-rr-search"></i> Recherche</a></p>
+
+        <br>
+        <i class='fi fi-rr-user'></i> Bienvenue <a href='profile.php'> {{ username }} </a> !
+        
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <a href="index.php" class="nav-link">MyWatchGuide</a>
+            </div>
+            <div class="navbar-right">
+                {% if username %}
+                    <a href="dashboard.php" class="nav-link">Tableau de bord</a>
+                    <a href="logout.php" class="nav-link">Se déconnecter</a>
+                {% else %}
+                    <a href="login.php" class="nav-link">Se connecter</a>
+                    <a href="register.php" class="nav-link">S'inscrire</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% block body %}
+
+    {% endblock %}
+
+</body>
+</html>

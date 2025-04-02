@@ -68,6 +68,7 @@ a[href="popular.php"],
 a[href="dashboard.php"],
 a[href="login.php"],
 a[href="index.php"],
+a[href="register.php"],
 .btnTMDB,
 .btnFavorite {
     all: unset; /* Réinitialise tous les styles */
@@ -89,6 +90,7 @@ a[href="popular.php"]:hover,
 a[href="dashboard.php"]:hover,
 a[href="login.php"]:hover,
 a[href="index.php"]:hover,
+a[href="register.php"]:hover,
 .btnTMDB:hover,
 .btnFavorite:hover {
     background-color: var(--secondary-color); /* Fond coloré au survol */
@@ -297,30 +299,38 @@ footer {
     }
 }
 
-/* Tableaux */
-
+/* Amélioration des tableaux */
 table {
     border-collapse: collapse;
     width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajout d'une ombre */
+    border-radius: var(--border-radius); /* Arrondi des bords */
+    overflow: hidden; /* Empêche les débordements */
 }
 
 th, td {
     border: 1px solid var(--text-color);
-    padding: 8px;
+    padding: 12px; /* Augmentation de l'espacement */
     text-align: left;
 }
 
 th {
     background-color: var(--primary-color);
     color: white;
+    text-transform: uppercase; /* Texte en majuscules */
+    letter-spacing: 1px; /* Espacement des lettres */
 }
 
 tr:nth-child(even) {
     background-color: var(--background-color);
+    transition: background-color var(--transition-speed); /* Transition au survol */
 }
 
-/* Formulaire de recherche */
+tr:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Légère surbrillance au survol */
+}
 
+/* Amélioration du formulaire de recherche */
 .search-form {
     display: flex;
     gap: 8px;
@@ -329,8 +339,28 @@ tr:nth-child(even) {
 
 .search-form input[type="text"] {
     flex: 1;
+    padding: 10px;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    transition: box-shadow var(--transition-speed); /* Transition pour un effet focus */
+}
+
+.search-form input[type="text"]:focus {
+    box-shadow: 0 0 8px var(--primary-color); /* Effet lumineux au focus */
+    border-color: var(--primary-color);
 }
 
 .search-form input[type="submit"] {
     flex: 0 0 auto;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.search-form input[type="submit"]:hover {
+    background-color: var(--secondary-color); /* Changement de couleur au survol */
 }

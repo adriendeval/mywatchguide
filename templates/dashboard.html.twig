@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+    <h2 class="mt-4">Mes favoris</h2>
+
+    {% if favorites is not empty %}
+        {% for favorite in favorites %}
+            <div class="card mb-3">
+                <h2>{{ favorite.title }}</h2>
+                <p>{{ favorite.overview }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucun favori trouvé.</p>
+    {% endif %}
+
+    {% if error is not empty %}
+        <div class="alert alert-danger">
+            <strong>Erreur lors de la récupération des favoris :</strong> {{ error }}
+        </div>
+    {% endif %}
+
+{% endblock %}

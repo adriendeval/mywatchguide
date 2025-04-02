@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($user && $password === $user['password']) {
             $_SESSION['username'] = $user['username'];
-            $log->info('Connexion réussie', ['username' => $user]);
+            $log->info('Connexion réussie');
             header('Location: dashboard.php');
             exit();
         } else {
@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - MyWatchGuide</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
