@@ -4,7 +4,6 @@ session_start();
 // Chargement de l'autoloader de Composer
 require 'vendor/autoload.php';
 
-use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Dotenv\Dotenv;
@@ -41,6 +40,7 @@ $client = new Client([
 $apiKey = $_ENV['TMDB_API'];
 
 // Films
+$movies = [];
 try {
     $response = $client->request('GET', 'trending/movie/week', [
         'query' => [
@@ -50,13 +50,17 @@ try {
         ]
     ]);
 
-    $data = json_decode($response->getBody(), true);
+    $moviesData = json_decode($response->getBody(), true);
+    $movies = $moviesData['results'] ?? [];
 
+    // Log des données reçues
+    $log->info('Donnes des films récupérées avec succès');
 } catch (Exception $e) {
-    echo "<p class='text-red-500'>Erreur : " . $e->getMessage() . "</p>";
+    $error .= "<p class='text-red-500'>Erreur lors de la récupération des films : " . $e->getMessage() . "</p>";
 }
 
 // Séries
+$tvShows = [];
 try {
     $response = $client->request('GET', 'trending/tv/week', [
         'query' => [
@@ -66,10 +70,13 @@ try {
         ]
     ]);
 
-    $data = json_decode($response->getBody(), true);
+    $tvData = json_decode($response->getBody(), true);
+    $tvShows = $tvData['results'] ?? [];
 
+    // Log des données reçues
+    $log->info('Données des séries récupérées avec succès');
 } catch (Exception $e) {
-    echo "<p class='text-red-500'>Erreur : " . $e->getMessage() . "</p>";
+    $error .= "<p class='text-red-500'>Erreur lors de la récupération des séries : " . $e->getMessage() . "</p>";
 }
 
 // Affichage du template
@@ -79,5 +86,6 @@ echo $twig->render('popular.html.twig', [
     'username' => $_SESSION['username'],
     'title' => 'Populaire - MyWatchGuide',
     'name' => 'Films et séries populaires',
-    'results' => $data['results'] ?? [],
+    'movies' => $movies,
+    'tv' => $tvShows,
 ]);

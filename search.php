@@ -13,6 +13,11 @@ $dotenv->load();
 $log = new Logger('search');
 $log->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::INFO));
 
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit();
+}
+
 $apiKey = $_ENV['TMDB_API'];
 $client = new Client([
     'base_uri' => 'http://api.themoviedb.org/3/',
