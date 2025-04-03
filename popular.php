@@ -54,7 +54,7 @@ try {
     $movies = $moviesData['results'] ?? [];
 
     // Log des données reçues
-    $log->info('Donnes des films récupérées avec succès');
+    $log->info('Données des films récupérées avec succès');
 } catch (Exception $e) {
     $error .= "<p class='text-red-500'>Erreur lors de la récupération des films : " . $e->getMessage() . "</p>";
 }

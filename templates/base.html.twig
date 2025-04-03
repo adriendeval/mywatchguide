@@ -1,14 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
-
 <title>{{ title }}</title>
 
 <div class="min-h-full">
@@ -39,7 +30,7 @@
                                         Se connecter
                                     </a>
                                 {% else %}
-                                    <a href="logout.php" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-red-700 hover:text-white">
+                                    <a href="logout.php" class="rounded-md px-3 py-2 text-sm font-medium text-red-400 hover:bg-red-700 hover:text-white">
                                         Se déconnecter
                                     </a>
                                 {% endif %}
@@ -61,13 +52,13 @@
         <!-- Menu mobile unique -->
         <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
             <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-                <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">
+                <a href="dashboard.php" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">
                     Tableau de bord
                 </a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                <a href="search.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                     Recherche
                 </a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                <a href="popular.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                     Populaire
                 </a>
                 {% if not username %}
@@ -78,7 +69,7 @@
                         Se connecter
                     </a>
                 {% else %}
-                    <a href="logout.php" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-red-700 hover:text-white">
+                    <a href="logout.php" class="block rounded-md px-3 py-2 text-base font-medium text-red-400 hover:bg-red-700 bg-opacity-50 hover:text-white">
                         Se déconnecter
                     </a>
                 {% endif %}
@@ -95,6 +86,42 @@
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <!-- Your content -->
             {% block body %}
+            {% for movie in movies %}
+                <div class="bg-white shadow-md rounded-lg flex flex-col p-4 h-full relative">
+                    {# Affichage de l'image du film avec fallback si indisponible #}
+                    <div class="relative">
+                        {% if movie.backdrop_path %}
+                            <img src="https://image.tmdb.org/t/p/w780{{ movie.backdrop_path }}" alt="{{ movie.title }}" class="mb-4 rounded">
+                        {% else %}
+                            <div class="flex items-center justify-center bg-gray-200 text-gray-500 text-sm font-medium h-48 rounded">
+                                Image indisponible
+                            </div>
+                        {% endif %}
+                        {% if movie.vote_average >= 7 %}
+                            <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Très bien ({{ movie.vote_average|slice(0, 3) }}/10)</span>
+                        {% elseif movie.vote_average >= 5 %}
+                            <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Correct ({{ movie.vote_average|slice(0, 3) }}/10)</span>
+                        {% elseif movie.vote_average < 5 %}
+                            <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Mauvais ({{ movie.vote_average|slice(0, 3) }}/10)</span>
+                        {% endif %}
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">{{ movie.title }}</h3>
+                    <p class="text-gray-600 flex-grow">{{ movie.overview|slice(0, 123)|join(' ') ~ '...' }}</p>
+
+                    {# Nouveau design des boutons divisés en 3 parties #}
+                    <div class="flex items-center justify-between mt-4 border border-gray-300 rounded-lg overflow-hidden">
+                        <a href="https://www.themoviedb.org/movie/{{ movie.id }}" target="_blank" class="flex-1 bg-blue-500 text-white text-center py-2 hover:bg-blue-700 transition duration-300 ease-in-out">
+                            Détails
+                        </a>
+                        <button class="flex-1 bg-yellow-500 text-white text-center py-2 hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none">
+                            Noter
+                        </button>
+                        <button class="flex-1 bg-black text-white text-center py-2 hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none">
+                            Favoris
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
             {% endblock %}
         </div>
     </main>
