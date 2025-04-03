@@ -24,27 +24,34 @@ $client = new Client([
     'timeout'  => 5.0,
 ]);
 
-$data = [];
+$data = [
+    'movie' => [],
+    'tv' => [],
+    'person' => [],
+    'collection' => []
+];
 $error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $searchType = $_POST['search_type'];
     $searchTerm = $_POST['search_term'];
 
-    try {
-        $response = $client->request('GET', 'search/' . $searchType, [
-            'query' => [
-                'api_key' => $apiKey,
-                'language' => 'fr-FR',
-                'query' => $searchTerm,
-                'page' => 1,
-            ]
-        ]);
+    $types = ['movie', 'tv', 'person', 'collection'];
+    foreach ($types as $type) {
+        try {
+            $response = $client->request('GET', "search/$type", [
+                'query' => [
+                    'api_key' => $apiKey,
+                    'language' => 'fr-FR',
+                    'query' => $searchTerm,
+                    'page' => 1,
+                ]
+            ]);
 
-        $data = json_decode($response->getBody(), true);
-    } catch (Exception $e) {
-        $log->error('Exception: ' . $e->getMessage());
-        $error = 'Une erreur est survenue. Veuillez réessayer.';
+            $data[$type] = json_decode($response->getBody(), true)['results'] ?? [];
+        } catch (Exception $e) {
+            $log->error("Erreur lors de la recherche pour $type: " . $e->getMessage());
+            $error = 'Une erreur est survenue. Veuillez réessayer.';
+        }
     }
 }
 
@@ -57,6 +64,6 @@ echo $twig->render('search.html.twig', [
     'username' => $_SESSION['username'],
     'title' => 'Recherche - MyWatchGuide',
     'name' => 'Recherche',
-    'results' => $data['results'] ?? [],
-    'media_type' => $data['media_type'],
+    'results' => $data,
+    'search_term' => $searchTerm,
 ]);
