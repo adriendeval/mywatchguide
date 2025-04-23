@@ -24,6 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     try {
+        // Configuration de Monolog
+        $log = new Logger('dashboard');
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/app.log', Logger::INFO));
+
+        // Initialisation de la connexion au serveur mail
+        $sendmail = new Adrien\Mywatchguide\Sendmail($log);
+
+        // Connexion à la base de données
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbUser, $dbPass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -34,11 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && $password === $user['password']) {
             $_SESSION['username'] = $user['username'];
             $log->info('Connexion réussie');
+            $sendmail->send($user['email'], 'Connexion réussie', 'Vous vous êtes connecté avec succès.');
             header('Location: dashboard.php');
             exit();
         } else {
-            echo "Identifiants incorrects.";
             $log->warning('Identifiants incorrects');
+            $sendmail->send($user['email'], 'Échec de la connexion', 'Une tentative de connexion a échoué avec ces identifiants : ' . $username);
+            echo "Identifiants incorrects.";
         }
     } catch (PDOException $e) {
         $log->error('PDOException: ' . $e->getMessage());
@@ -62,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
         <h2 class="text-2xl font-bold text-center mb-6">Connexion</h2>
 
-        <form action="login.php" method="post" class="space-y-4">
+        <form action="Sendmail.php" method="post" class="space-y-4">
             <div>
                 <label for="username" class="block text-gray-700 font-bold mb-2">Nom d'utilisateur :</label>
                 <input type="text" id="username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">

@@ -19,14 +19,15 @@
                         {# Affichage de l'image du film avec badge #}
                         <div class="relative">
                             <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="mb-4 rounded">
-                            {% if movie.vote_average >= 7 %}
+                            {% if movie.release_date > "now"|date("Y-m-d") %}
+                                <span class="absolute top-2 left-2 bg-gray-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Pas sorti</span>
+                            {% elseif movie.vote_average >= 7 %}
                                 <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Très bien ({{ movie.vote_average|slice(0, 3) }}/10)</span>
                             {% elseif movie.vote_average >= 5 %}
                                 <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Correct ({{ movie.vote_average|slice(0, 3) }}/10)</span>
                             {% elseif movie.vote_average < 5 %}
                                 <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Mauvais ({{ movie.vote_average|slice(0, 3) }}/10)</span>
                             {% endif %}
-                            
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ movie.title }}</h3>
                         <p class="text-gray-600 flex-grow">{{ movie.overview|slice(0, 128)|join(' ') ~ '...' }}</p>
