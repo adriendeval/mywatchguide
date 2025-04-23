@@ -27,11 +27,11 @@ class Sendmail
         $this->mail->SMTPSecure = 'tls';
         $this->mail->Port = 587;
     }
-    public function send($subject, $body, $to='adrien.deval@ikmail.com')
+    public function send($subject, $body)
     {
         try {
             $this->mail->setFrom('adrien.deval@ikmail.com', 'MyWatchGuide');
-            $this->mail->addAddress($to);
+            $this->mail->addAddress('adrien.deval@ikmail.com', 'MyWatchGuide');
             $this->mail->Subject = $subject;
             $this->mail->Body = $body;
             $this->mail->send();
