@@ -2,36 +2,197 @@
 
 {% block body %}
 
-	<div class="container mx-auto px-4 py-8">
-		<h1 class="text-3xl font-bold mb-6">Recherche</h1>
-		<form action="search.php" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-6">
-			<div class="mb-4">
-				<label for="search_type" class="block text-gray-700 text-sm font-bold mb-2">Type de recherche :</label>
-				<select name="search_type" id="search_type" class="block w-full border border-gray-300 rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-					<option value="movie">Films</option>
-					<option value="tv">Séries</option>
-				</select>
+	<div
+		class="container mx-auto px-4 py-8">
+		<!-- Section de recherche compacte -->
+		<form action="search.php" method="post" class="bg-white shadow-lg rounded-lg p-4 mb-8">
+			<div class="flex items-center justify-between">
+				<input type="text" name="search_term" id="search_term" required class="flex-grow border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Rechercher..." value="{{ search_term|default('') }}">
+
+				<button type="submit" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+					Rechercher
+				</button>
 			</div>
-			<div class="mb-4"></div>
-			<label for="search_term" class="block text-gray-700 text-sm font-bold mb-2">Terme de recherche :</label>
-			<input type="text" name="search_term" id="search_term" required class="block w-full border border-gray-300 rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-		</div>
-		<div class="flex items-center justify-between"></div>
-		<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-			Rechercher
-		</button>
+			<div class="mt-2 text-right">
+				<a href="#" class="text-sm text-blue-500 hover:underline flex items-center justify-end" onclick="toggleAdvancedOptions(event)">
+					<span>Options avancées</span>
+				</a>
+			</div>
+			<div id="advanced-options" class="hidden mt-4 bg-gray-100 p-4 rounded-lg shadow-inner">
+				<div
+					class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					{# <div>
+									<label for="genre" class="block text-sm font-medium text-gray-700">Genre</label>
+										<select id="genre" name="genre" class="mt-1 block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+										<option value="">Sélectionner un genre</option>
+										{% for genre in genres %}
+										<option value="{{ genre.id }}">{{ genre.name }}</option>
+										{% endfor %}
+										</select>
+										</div> #}
+					<div>
+						<label for="release_year" class="block text-sm font-medium text-gray-700">Année de sortie</label>
+						<input type="number" id="release_year" name="release_year" class="mt-1 block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 2023">
+					</div>
+				</div>
+			</div>
+			<script>
+				function toggleAdvancedOptions(event) {
+event.preventDefault();
+const advancedOptions = document.getElementById('advanced-options');
+advancedOptions.classList.toggle('hidden');
+}
+			</script>
+		</form>
+
+		<!-- Barre d'onglets responsive -->
+		<h2 class="text-3xl font-semibold text-gray-800 mt-12 mb-6 text-center">Résultats de la recherche</h2>
+
+		{% if results is not empty %}
+			<div>
+				<div class="border-b border-gray-200">
+					<nav class="flex flex-wrap -mb-px justify-center" id="tabs">
+						<button data-tab="movie" class="tab-button flex-1 text-center text-grey-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
+							Films
+						</button>
+						<button data-tab="tv" class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
+							Séries
+						</button>
+						<button data-tab="person" class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
+							Acteurs
+						</button>
+						<button data-tab="collection" class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+							Collections
+						</button>
+					</nav>
+				</div>
+
+				<div id="tab-contents">
+					{% for type, items in results %}
+						<div id="tab-{{ type }}" class="tab-content {% if type != 'movie' %}hidden{% endif %}">
+							{% if items is not empty %}
+								<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+									{% for item in items %}
+										<div class="bg-white shadow-md rounded-lg overflow-hidden">
+											{% if type == 'movie' %}
+												<!-- Section Films -->
+												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
+													{% if item.backdrop_path %}
+														<img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.title }}" class="object-cover w-full h-full">
+													{% else %}
+														<span class="text-gray-500">Image indisponible</span>
+													{% endif %}
+												</div>
+												<div class="p-4">
+													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.title }}</h3>
+													<p
+														class="text-sm text-gray-600">
+														{# Affiche l’année (4 premiers caractères) ou 'Date inconnue' #}
+														{% set releaseYear = item.release_date|default('0000')|slice(0,4) %}
+														{{ releaseYear == '0000' ? 'Date inconnue' : releaseYear }}
+
+														{# Affiche le status si la date de sortie est dans le futur #}
+														{% if item.status and item.release_date and item.release_date > "now"|date("Y-m-d") %}
+															-
+															<span class="text-red-500">{{ item.status }}</span>
+														{% endif %}
+													</p>
+													<p class="text-sm text-gray-600">
+														Note :
+														{{ item.vote_average|default(0)|round(1) }}/10
+													</p>
+												</div>
+
+											{% elseif type == 'tv' %}
+												<!-- Section Séries -->
+												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
+													{% if item.backdrop_path %}
+														<img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
+													{% else %}
+														<span class="text-gray-500">Image indisponible</span>
+													{% endif %}
+												</div>
+												<div class="p-4">
+													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
+													<p class="text-sm text-gray-600">
+														{% set firstAirYear = item.first_air_date|default('0000')|slice(0,4) %}
+														{{ firstAirYear == '0000' ? 'Date inconnue' : firstAirYear }}
+														-
+														<span class="text-blue-500">{{ item.status }}</span>
+													</p>
+													<p class="text-sm text-gray-600">
+														Note :
+														{{ item.vote_average|default(0)|round(1) }}/10
+													</p>
+												</div>
+
+											{% elseif type == 'person' %}
+												<!-- Section Acteurs -->
+												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
+													{% if item.profile_path %}
+														<img src="https://image.tmdb.org/t/p/w500{{ item.profile_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
+													{% else %}
+														<span class="text-gray-500">Image indisponible</span>
+													{% endif %}
+												</div>
+												<div class="p-4">
+													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
+													<p class="text-sm text-gray-600">
+														Célèbre pour :
+														{% if item.known_for is not empty %}
+															{{ item.known_for|map(i => i.title ?? i.name)|join(', ') }}
+														{% else %}
+															Non spécifié
+														{% endif %}
+													</p>
+												</div>
+
+											{% elseif type == 'collection' %}
+												<!-- Section Collections -->
+												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
+													{% if item.backdrop_path %}
+														<img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
+													{% else %}
+														<span class="text-gray-500">Image indisponible</span>
+													{% endif %}
+												</div>
+												<div class="p-4">
+													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
+													<p class="text-sm text-gray-600">
+														{{ item.overview|default('Aucune description disponible')|slice(0, 100) ~ '...' }}
+													</p>
+												</div>
+											{% endif %}
+										</div>
+										{# Fin de la carte #}
+									{% endfor %}
+								</div>
+								{# Fin de la grille #}
+							{% else %}
+								<p class="text-center text-gray-500 mt-8">Aucun résultat. Relancez votre recherche.</p>
+							{% endif %}
+						</div>
+						{# Fin du contenu d'onglet #}
+					{% endfor %}
+				</div>
+				{# Fin de #tab-contents #}
+			</div>
+		{% else %}
+			<p class="text-center text-gray-500 mt-8">Aucun résultat. Essayez un autre terme de recherche.</p>
+		{% endif %}
 	</div>
-</form>
-
-<h2 class="text-2xl font-semibold mt-8">Résultats de la recherche</h2>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-	{% for result in results %}
-		<div class="bg-white shadow-md rounded-lg p-4">
-			<h3 class="text-lg font-semibold mb-2">{{ result.original_title }}</h3>
-			<p class="text-gray-600">{{ result.overview }}</p>
-			<a href="#" class="text-blue-500 hover:underline">Voir les détails</a>
-		</div>
-	{% endfor %}
-
-</div>{% endblock %}
+	<script>
+		const tabs = document.querySelectorAll('.tab-button');
+const contents = document.querySelectorAll('.tab-content');
+tabs.forEach(tab => {
+tab.addEventListener('click', () => { // Retire la classe active de tous les onglets
+tabs.forEach(t => t.classList.remove('text-blue-600', 'border-blue-500'));
+// Ajoute la classe active à l'onglet cliqué
+tab.classList.add('text-blue-600', 'border-blue-500');
+// Cache tous les contenus, puis affiche le bon
+contents.forEach(content => content.classList.add('hidden'));
+document.getElementById('tab-' + tab.dataset.tab).classList.remove('hidden');
+});
+});
+	</script>
+{% endblock %}

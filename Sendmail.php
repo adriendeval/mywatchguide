@@ -42,5 +42,3 @@ class Sendmail
     }               
 
 }
-
-header('Location: index.php');

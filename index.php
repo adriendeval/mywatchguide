@@ -15,4 +15,5 @@ echo $twig->render('index.html.twig', [
     'error' => $error,
     'username' => $username,
     'title' => 'Accueil - MyWatchGuide',
+    'name' => 'Accueil',
 ]);

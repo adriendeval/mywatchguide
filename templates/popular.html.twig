@@ -19,23 +19,29 @@
                         {# Affichage de l'image du film avec badge #}
                         <div class="relative">
                             <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="mb-4 rounded">
-                            {% if movie.release_date > "now"|date("Y-m-d") %}
-                                <span class="absolute top-2 left-2 bg-gray-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Pas sorti</span>
-                            {% elseif movie.vote_average >= 7 %}
+                            {% if movie.vote_average >= 7 %}
                                 <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Très bien ({{ movie.vote_average|slice(0, 3) }}/10)</span>
                             {% elseif movie.vote_average >= 5 %}
-                                <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Correct ({{ movie.vote_average|slice(0, 3) }}/10)</span>
+                                <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Correct ({{ movie.vote_average|slice(0, 3) }}/10)</span>
                             {% elseif movie.vote_average < 5 %}
-                                <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md">Mauvais ({{ movie.vote_average|slice(0, 3) }}/10)</span>
+                                <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Mauvais ({{ movie.vote_average|slice(0, 3) }}/10)</span>
                             {% endif %}
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ movie.title }}</h3>
-                        <p class="text-gray-600 flex-grow">{{ movie.overview|slice(0, 128)|join(' ') ~ '...' }}</p>
-                        <a href="https://www.themoviedb.org/movie/{{ movie.id }}" class="text-blue-500 hover:text-blue-700 underline mt-4 self-start transition duration-300 ease-in-out" target="_blank" title="Ouvrir dans un nouvel onglet">
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                Voir les détails
+                        <p class="text-gray-600 flex-grow">{{ movie.overview|slice(0, 123)|join(' ') ~ '...' }}</p>
+
+                        {# Nouveau design des boutons divisés en 3 parties #}
+                        <div class="flex items-center justify-between mt-4 border border-gray-300 rounded-lg overflow-hidden">
+                            <a href="https://www.themoviedb.org/movie/{{ movie.id }}" target="_blank" class="flex-1 bg-blue-500 text-white text-center py-2 hover:bg-blue-700 transition duration-300 ease-in-out">
+                                Détails
+                            </a>
+                            <button class="flex-1 bg-yellow-500 text-white text-center py-2 hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none">
+                                Noter
                             </button>
-                        </a>
+                            <button class="flex-1 bg-black text-white text-center py-2 hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none">
+                                Favoris
+                            </button>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
@@ -50,11 +56,25 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {% if tv is not empty %}
                 {% for series in tv %}
-                    <div class="bg-white shadow-md rounded-lg flex flex-col p-4 h-full">
-                        <img src="https://image.tmdb.org/t/p/w500{{ series.poster_path }}" alt="{{ series.original_name }}" class="mb-4 rounded">
-                        <h3 class="text-lg font-semibold mb-2">{{ series.original_name }}</h3>
-                        <p class="text-gray-600 flex-grow">{{ series.overview }}</p>
-                        <a href="#" class="text-blue-500 hover:underline mt-4 self-start">Voir les détails</a>
+                    <div class="bg-white shadow-md rounded-lg flex flex-col p-4 h-full relative">
+                        {# Affichage de l'image de la série avec badge #}
+                        <div class="relative">
+                            <img src="https://image.tmdb.org/t/p/w500{{ series.poster_path }}" alt="{{ series.name }}" class="mb-4 rounded">
+                            {% if series.vote_average >= 7 %}
+                                <span class="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Très bien ({{ series.vote_average|slice(0, 3) }}/10)</span>
+                            {% elseif series.vote_average >= 5 %}
+                                <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Correct ({{ series.vote_average|slice(0, 3) }}/10)</span>
+                            {% elseif series.vote_average < 5 %}
+                                <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded shadow-md">Mauvais ({{ series.vote_average|slice(0, 3) }}/10)</span>
+                            {% endif %}
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">{{ series.name }}</h3>
+                        <p class="text-gray-600 flex-grow">{{ series.overview|slice(0, 123)|join(' ') ~ '...' }}</p>
+                        <a href="https://www.themoviedb.org/tv/{{ series.id }}" class="text-blue-500 hover:text-blue-700 underline mt-4 self-start transition duration-300 ease-in-out" target="_blank" title="Ouvrir dans un nouvel onglet">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Voir les détails
+                            </button>
+                        </a>
                     </div>
                 {% endfor %}
             {% else %}

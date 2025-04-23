@@ -1,6 +1,0 @@
-[2025-04-23T12:27:35.455991+00:00] login.INFO: Connexion réussie [] []
-[2025-04-23T12:30:24.447730+00:00] dashboard.INFO: Donnes des films récupérées avec succès [] []
-[2025-04-23T12:30:24.571682+00:00] dashboard.INFO: Données des séries récupérées avec succès [] []
-[2025-04-23T12:32:55.729140+00:00] login.INFO: Connexion réussie [] []
-[2025-04-23T12:32:56.095868+00:00] login.ERROR: Erreur lors de l'envoi du mail : SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server [] []
-[2025-04-23T12:34:32.207795+00:00] login.INFO: Connexion réussie [] []
