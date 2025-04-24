@@ -18,7 +18,7 @@ $log = new Logger('dashboard');
 $log->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::INFO));
 
 if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
+    header('Location: /src/login.php');
     exit();
 }
 
