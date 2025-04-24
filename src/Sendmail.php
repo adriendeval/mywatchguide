@@ -35,7 +35,7 @@ class Sendmail
             $this->mail->Subject = $subject;
             $this->mail->Body = $body;
             $this->mail->send();
-            $this->log->info("Email sent to $to with subject: $subject");
+            $this->log->info("Email envoyé : $subject");
         } catch (\Exception $e) {
             $this->log->error("Email could not be sent. Mailer Error: {$this->mail->ErrorInfo}");
         }

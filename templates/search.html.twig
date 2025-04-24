@@ -2,197 +2,153 @@
 
 {% block body %}
 
-	<div
-		class="container mx-auto px-4 py-8">
-		<!-- Section de recherche compacte -->
-		<form action="search.php" method="post" class="bg-white shadow-lg rounded-lg p-4 mb-8">
-			<div class="flex items-center justify-between">
-				<input type="text" name="search_term" id="search_term" required class="flex-grow border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Rechercher..." value="{{ search_term|default('') }}">
+<div class="container mx-auto px-4 py-8">
+    <!-- Section de recherche compacte -->
+    <form action="search.php" method="post" class="bg-white shadow-lg rounded-lg p-6 mb-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <input type="text" name="search_term" id="search_term" required
+                class="flex-grow border border-gray-300 rounded-lg py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Rechercher..." value="{{ search_term|default('') }}">
 
-				<button type="submit" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-					Rechercher
-				</button>
-			</div>
-			<div class="mt-2 text-right">
-				<a href="#" class="text-sm text-blue-500 hover:underline flex items-center justify-end" onclick="toggleAdvancedOptions(event)">
-					<span>Options avancées</span>
-				</a>
-			</div>
-			<div id="advanced-options" class="hidden mt-4 bg-gray-100 p-4 rounded-lg shadow-inner">
-				<div
-					class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{# <div>
-									<label for="genre" class="block text-sm font-medium text-gray-700">Genre</label>
-										<select id="genre" name="genre" class="mt-1 block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-										<option value="">Sélectionner un genre</option>
-										{% for genre in genres %}
-										<option value="{{ genre.id }}">{{ genre.name }}</option>
-										{% endfor %}
-										</select>
-										</div> #}
-					<div>
-						<label for="release_year" class="block text-sm font-medium text-gray-700">Année de sortie</label>
-						<input type="number" id="release_year" name="release_year" class="mt-1 block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 2023">
-					</div>
-				</div>
-			</div>
-			<script>
-				function toggleAdvancedOptions(event) {
-event.preventDefault();
-const advancedOptions = document.getElementById('advanced-options');
-advancedOptions.classList.toggle('hidden');
-}
-			</script>
-		</form>
+            <button type="submit"
+                class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                Rechercher
+            </button>
+        </div>
+        <div class="mt-4 text-right">
+            <a href="#" class="text-sm text-blue-500 hover:underline flex items-center justify-end"
+                onclick="toggleAdvancedOptions(event)">
+                <span>Options avancées</span>
+            </a>
+        </div>
+        <div id="advanced-options" class="hidden mt-6 bg-gray-100 p-6 rounded-lg shadow-inner">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="release_year" class="block text-sm font-medium text-gray-700">Année de sortie</label>
+                    <input type="number" id="release_year" name="release_year"
+                        class="mt-2 block w-full border border-gray-300 rounded-lg py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ex: 2023">
+                </div>
+            </div>
+        </div>
+        <script>
+            function toggleAdvancedOptions(event) {
+                event.preventDefault();
+                const advancedOptions = document.getElementById('advanced-options');
+                advancedOptions.classList.toggle('hidden');
+            }
+        </script>
+    </form>
 
-		<!-- Barre d'onglets responsive -->
-		<h2 class="text-3xl font-semibold text-gray-800 mt-12 mb-6 text-center">Résultats de la recherche</h2>
+    <!-- Barre d'onglets responsive -->
+    <h2 class="text-4xl font-bold text-gray-800 mt-12 mb-8 text-center">Résultats de la recherche</h2>
 
-		{% if results is not empty %}
-			<div>
-				<div class="border-b border-gray-200">
-					<nav class="flex flex-wrap -mb-px justify-center" id="tabs">
-						<button data-tab="movie" class="tab-button flex-1 text-center text-grey-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
-							Films
-						</button>
-						<button data-tab="tv" class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
-							Séries
-						</button>
-						<button data-tab="person" class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
-							Acteurs
-						</button>
-						<button data-tab="collection" class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-							Collections
-						</button>
-					</nav>
-				</div>
+    {% if results is not empty %}
+    <div>
+        <div class="border-b border-gray-200">
+            <nav class="flex flex-wrap -mb-px justify-center" id="tabs">
+                {% set tabs = {'movie': 'Films', 'tv': 'Séries', 'person': 'Personnes', 'collection': 'Collections'} %}
+                {% for tab, label in tabs %}
+                <button data-tab="{{ tab }}"
+                    class="tab-button flex-1 text-center text-gray-500 hover:text-blue-600 hover:border-blue-500 whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition duration-300">
+                    {{ label }}
+                </button>
+                {% endfor %}
+            </nav>
+        </div>
 
-				<div id="tab-contents">
-					{% for type, items in results %}
-						<div id="tab-{{ type }}" class="tab-content {% if type != 'movie' %}hidden{% endif %}">
-							{% if items is not empty %}
-								<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-									{% for item in items %}
-										<div class="bg-white shadow-md rounded-lg overflow-hidden">
-											{% if type == 'movie' %}
-												<!-- Section Films -->
-												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
-													{% if item.backdrop_path %}
-														<img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.title }}" class="object-cover w-full h-full">
-													{% else %}
-														<span class="text-gray-500">Image indisponible</span>
-													{% endif %}
-												</div>
-												<div class="p-4">
-													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.title }}</h3>
-													<p
-														class="text-sm text-gray-600">
-														{# Affiche l’année (4 premiers caractères) ou 'Date inconnue' #}
-														{% set releaseYear = item.release_date|default('0000')|slice(0,4) %}
-														{{ releaseYear == '0000' ? 'Date inconnue' : releaseYear }}
+        <div id="tab-contents" class="mt-8">
+            {% for type, items in results %}
+            <div id="tab-{{ type }}" class="tab-content {% if type != 'movie' %}hidden{% endif %}">
+                {% if items is not empty %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {% for item in items %}
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="relative h-48 bg-gray-200 flex items-center justify-center">
+                            {% if type in ['movie', 'tv', 'collection'] and item.backdrop_path %}
+                                <img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.title ?? item.name }}" class="object-cover w-full h-full">
+                            {% elseif type == 'person' and item.profile_path %}
+                                <img src="https://image.tmdb.org/t/p/w500{{ item.profile_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
+                            {% else %}
+                                <span class="text-gray-500">Image indisponible</span>
+                            {% endif %}
 
-														{# Affiche le status si la date de sortie est dans le futur #}
-														{% if item.status and item.release_date and item.release_date > "now"|date("Y-m-d") %}
-															-
-															<span class="text-red-500">{{ item.status }}</span>
-														{% endif %}
-													</p>
-													<p class="text-sm text-gray-600">
-														Note :
-														{{ item.vote_average|default(0)|round(1) }}/10
-													</p>
-												</div>
+                            {# Badges d'infos en overlay #}
+                            {% if type == 'movie' %}
+                                <div class="absolute top-0 left-0 m-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    {{ item.release_date|default('Date inconnue')|slice(0,4) }}
+                                </div>
+                                <div class="absolute top-0 right-0 m-2 bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    {{ item.vote_average|default(0)|round(1) }}/10
+                                </div>
+                            {% elseif type == 'tv' %}
+                                <div class="absolute top-0 left-0 m-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    {{ item.first_air_date|default('Date inconnue')|slice(0,4) }}
+                                </div>
+                                <div class="absolute top-0 right-0 m-2 bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    {{ item.vote_average|default(0)|round(1) }}/10
+                                </div>
+                            {% elseif type == 'person' %}
+                                <div class="absolute top-0 left-0 m-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    Âge : {{ item.age|default('N/A') }}
+                                </div>
+                            {% elseif type == 'collection' %}
+                                <div class="absolute top-0 left-0 m-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    Déb: {{ item.first_air_date|default('N/A')|slice(0,4) }}
+                                </div>
+                                <div class="absolute top-0 right-0 m-2 bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    Fin: {{ item.last_air_date|default('N/A')|slice(0,4) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.title ?? item.name }}</h3>
+                            {% if type == 'movie' or type == 'tv' %}
+                                <p class="text-sm text-gray-600">
+                                    {{ item.overview|default('Aucun synopsis disponible')|slice(0,100) ~ '...' }}
+                                </p>
+                            {% elseif type == 'person' %}
+                                <p class="text-sm text-gray-600">
+                                    Célèbre pour : {{ item.known_for|map(i => i.title ?? i.name)|join(', ')|default('Non spécifié') }}
+                                </p>
+                            {% elseif type == 'collection' %}
+                                <p class="text-sm text-gray-600">
+                                    {{ item.overview|default('Aucune description disponible')|slice(0, 100) ~ '...' }}
+                                </p>
+                            {% endif %}
+                            {# Pour films et séries, la note est déjà en overlay #}
+                            {% if type != 'movie' and type != 'tv' %}
+                                <p class="text-sm text-gray-600 mt-2">
+                                    Note : {{ item.vote_average|default(0)|round(1) }}/10
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-gray-500 mt-8">Aucun résultat. Relancez votre recherche.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <p class="text-center text-gray-500 mt-8">Aucun résultat. Essayez un autre terme de recherche.</p>
+    {% endif %}
+</div>
 
-											{% elseif type == 'tv' %}
-												<!-- Section Séries -->
-												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
-													{% if item.backdrop_path %}
-														<img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
-													{% else %}
-														<span class="text-gray-500">Image indisponible</span>
-													{% endif %}
-												</div>
-												<div class="p-4">
-													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
-													<p class="text-sm text-gray-600">
-														{% set firstAirYear = item.first_air_date|default('0000')|slice(0,4) %}
-														{{ firstAirYear == '0000' ? 'Date inconnue' : firstAirYear }}
-														-
-														<span class="text-blue-500">{{ item.status }}</span>
-													</p>
-													<p class="text-sm text-gray-600">
-														Note :
-														{{ item.vote_average|default(0)|round(1) }}/10
-													</p>
-												</div>
+<script>
+    const tabs = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('text-blue-600', 'border-blue-500'));
+            tab.classList.add('text-blue-600', 'border-blue-500');
+            contents.forEach(content => content.classList.add('hidden'));
+            document.getElementById('tab-' + tab.dataset.tab).classList.remove('hidden');
+        });
+    });
+</script>
 
-											{% elseif type == 'person' %}
-												<!-- Section Acteurs -->
-												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
-													{% if item.profile_path %}
-														<img src="https://image.tmdb.org/t/p/w500{{ item.profile_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
-													{% else %}
-														<span class="text-gray-500">Image indisponible</span>
-													{% endif %}
-												</div>
-												<div class="p-4">
-													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
-													<p class="text-sm text-gray-600">
-														Célèbre pour :
-														{% if item.known_for is not empty %}
-															{{ item.known_for|map(i => i.title ?? i.name)|join(', ') }}
-														{% else %}
-															Non spécifié
-														{% endif %}
-													</p>
-												</div>
-
-											{% elseif type == 'collection' %}
-												<!-- Section Collections -->
-												<div class="relative h-40 bg-gray-200 flex items-center justify-center">
-													{% if item.backdrop_path %}
-														<img src="https://image.tmdb.org/t/p/w500{{ item.backdrop_path }}" alt="{{ item.name }}" class="object-cover w-full h-full">
-													{% else %}
-														<span class="text-gray-500">Image indisponible</span>
-													{% endif %}
-												</div>
-												<div class="p-4">
-													<h3 class="text-lg font-semibold text-gray-900 mb-2">{{ item.name }}</h3>
-													<p class="text-sm text-gray-600">
-														{{ item.overview|default('Aucune description disponible')|slice(0, 100) ~ '...' }}
-													</p>
-												</div>
-											{% endif %}
-										</div>
-										{# Fin de la carte #}
-									{% endfor %}
-								</div>
-								{# Fin de la grille #}
-							{% else %}
-								<p class="text-center text-gray-500 mt-8">Aucun résultat. Relancez votre recherche.</p>
-							{% endif %}
-						</div>
-						{# Fin du contenu d'onglet #}
-					{% endfor %}
-				</div>
-				{# Fin de #tab-contents #}
-			</div>
-		{% else %}
-			<p class="text-center text-gray-500 mt-8">Aucun résultat. Essayez un autre terme de recherche.</p>
-		{% endif %}
-	</div>
-	<script>
-		const tabs = document.querySelectorAll('.tab-button');
-const contents = document.querySelectorAll('.tab-content');
-tabs.forEach(tab => {
-tab.addEventListener('click', () => { // Retire la classe active de tous les onglets
-tabs.forEach(t => t.classList.remove('text-blue-600', 'border-blue-500'));
-// Ajoute la classe active à l'onglet cliqué
-tab.classList.add('text-blue-600', 'border-blue-500');
-// Cache tous les contenus, puis affiche le bon
-contents.forEach(content => content.classList.add('hidden'));
-document.getElementById('tab-' + tab.dataset.tab).classList.remove('hidden');
-});
-});
-	</script>
 {% endblock %}
