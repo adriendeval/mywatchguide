@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mon Application</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	</head>
+
+    <body class="bg-gray-100 text-gray-900">
+        
+        {{ include('header.html.twig') }}
+
+        <main class="p-4">
+            <p>Contenu principal de l'application.</p>
+        </main>
+
+        {{ include('footer.html.twig') }}
+
+</html>
