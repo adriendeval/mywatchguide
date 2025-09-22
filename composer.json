@@ -1,10 +1,6 @@
 {
     "name": "adrien/mywatchguide",
     "type": "project",
-    "require": {
-        "twig/twig": "^3.21",
-        "guzzlehttp/guzzle": "^7.9"
-    },
     "license": "MIT",
     "autoload": {
         "psr-4": {
